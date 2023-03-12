@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CPMForms from "./CPMForms";
+import CPMResults from "./CPMResults";
+import Home from "./Home";
+import NoPage from "./NoPage";
+import PosForms from "./PosForms"
+import PosResults from "./PosResults"
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cpm/forms" element={<CPMForms  />} />
+          <Route path="/cpm/results" element={<CPMResults />} />
+          <Route path="/pos/forms" element={<PosForms />} />
+          <Route path="/pos/results" element={<PosResults />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

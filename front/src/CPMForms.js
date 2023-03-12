@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "./Form";
+import { Link } from "react-router-dom";
 
 const CPMForms = () => {
   const [amount, setAmount] = useState(1);
@@ -21,7 +22,9 @@ const CPMForms = () => {
       {amount}
       <button onClick={minus}>-</button>
       {forms}
-      <button>Oblicz</button>
+      <button>
+        <Link to="/cpm/results">Oblicz</Link>
+      </button>
     </div>
   );
 };
