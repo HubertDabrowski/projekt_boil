@@ -1,5 +1,7 @@
 package pl.fus.backend.CPM;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.*;
 
 public class CriticalPath {
@@ -8,7 +10,7 @@ public class CriticalPath {
 
     public static void main(String[] args) {
         // The example dependency graph
-        HashSet<Task> allTasks = new HashSet<Task>();
+        HashSet<Task> allTasks = new HashSet<>();
         Task start = new Task("A", 3);
         Task B = new Task("B", 4, start);
         Task C = new Task("C", 6, start);
@@ -52,7 +54,7 @@ public class CriticalPath {
         // the latest finish
         public int latestFinish;
         // the tasks on which this task is dependant
-        public HashSet<Task> dependencies = new HashSet<Task>();
+        public Set<Task> dependencies = new HashSet<>();
 
         public Task(String name, int cost, Task... dependencies) {
             this.name = name;
@@ -76,26 +78,13 @@ public class CriticalPath {
             return toString;
         }
 
-//        public boolean isDependent(Task t) {
-//            // is t a direct dependency?
-//            if (dependencies.contains(t)) {
-//                return true;
-//            }
-//            // is t an indirect dependency
-//            for (Task dep : dependencies) {
-//                if (dep.isDependent(t)) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        }
     }
 
     public static Task[] criticalPath(Set<Task> tasks) {
         // tasks whose critical cost has been calculated
-        HashSet<Task> completed = new HashSet<Task>();
+        HashSet<Task> completed = new HashSet<>();
         // tasks whose critical cost needs to be calculated
-        HashSet<Task> remaining = new HashSet<Task>(tasks);
+        HashSet<Task> remaining = new HashSet<>(tasks);
 
         // Backflow algorithm
         // while there are tasks whose critical cost isn't calculated.

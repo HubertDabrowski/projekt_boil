@@ -1,6 +1,5 @@
 package pl.fus.backend.CPM;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class CpmActivity {
@@ -28,17 +25,18 @@ public class CpmActivity {
     // the latest finish
     public int latestFinish;
     // the tasks on which this task is dependant
+    public HashSet<String> dependenciesName = new HashSet<>();
     public HashSet<CpmActivity> dependencies = new HashSet<>();
 
-    public CpmActivity(String name, int cost, CpmActivity... dependencies) {
-        this.name = name;
-        this.cost = cost;
-        for (CpmActivity t : dependencies) {
-            System.out.println(name + " and dependencies " + t.name);
-            this.dependencies.add(t);
-        }
-        this.earlyFinish = -1;
-    }
+//    public CpmActivity(String name, int cost, String... dependencies) {
+//        this.name = name;
+//        this.cost = cost;
+//        for (String t : dependencies) {
+//            System.out.println(name + " and dependencies " + t);
+//            this.dependencies.add(t);
+//        }
+//        this.earlyFinish = -1;
+//    }
 
 //    public void setLatest() {
 //        latestStart = maxCost - criticalCost;
