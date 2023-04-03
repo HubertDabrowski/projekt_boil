@@ -1,6 +1,10 @@
 package pl.fus.backend.CPM;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,31 +13,39 @@ import java.util.Set;
 
 import static pl.fus.backend.CPM.CpmService.maxCost;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class Task {
 
     // the actual cost of the task
-    public int cost;
+    private int cost;
     // the cost of the task along the critical path
     @JsonIgnore
-    public int criticalCost;
+    private int criticalCost;
     // a name for the task for printing
-    public String name;
+    private String name;
     // the earliest start
     @JsonIgnore
-    public int earlyStart;
+    private int earlyStart;
     // the earliest finish
     @JsonIgnore
-    public int earlyFinish;
+    private int earlyFinish;
     // the latest start
     @JsonIgnore
-    public int latestStart;
+    private int latestStart;
     // the latest finish
     @JsonIgnore
-    public int latestFinish;
+    private int latestFinish;
     // the tasks on which this task is dependant
-    public List<String> poprzednik = new ArrayList<>();
+//    public List<String> poprzednik = new ArrayList<>();
     @JsonIgnore
-    public Set<Task> dependencies = new HashSet<>();
+    private Set<Task> dependencies = new HashSet<>();
+
+    public Task(TaskDTO dto) {
+        this.name = dto.getName();
+        this.cost = dto.getCost();
+    }
 
     public Task(String name, int cost, Task... dependencies) {
         this.name = name;
@@ -43,81 +55,6 @@ public class Task {
             this.dependencies.add(t);
         }
         this.earlyFinish = -1;
-    }
-
-    public Task() {
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getCriticalCost() {
-        return criticalCost;
-    }
-
-    public void setCriticalCost(int criticalCost) {
-        this.criticalCost = criticalCost;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getEarlyStart() {
-        return earlyStart;
-    }
-
-    public void setEarlyStart(int earlyStart) {
-        this.earlyStart = earlyStart;
-    }
-
-    public int getEarlyFinish() {
-        return earlyFinish;
-    }
-
-    public void setEarlyFinish(int earlyFinish) {
-        this.earlyFinish = earlyFinish;
-    }
-
-    public int getLatestStart() {
-        return latestStart;
-    }
-
-    public void setLatestStart(int latestStart) {
-        this.latestStart = latestStart;
-    }
-
-    public int getLatestFinish() {
-        return latestFinish;
-    }
-
-    public void setLatestFinish(int latestFinish) {
-        this.latestFinish = latestFinish;
-    }
-
-    public List<String> getPoprzednik() {
-        return poprzednik;
-    }
-
-    public void setPoprzednik(List<String> poprzednik) {
-        this.poprzednik = poprzednik;
-    }
-
-    public Set<Task> getDependencies() {
-        return dependencies;
-    }
-
-    public void setDependencies(Set<Task> dependencies) {
-        this.dependencies = dependencies;
     }
 
     public void setLatest() {
@@ -130,15 +67,6 @@ public class Task {
         String[] toString = {name, earlyStart + "", earlyFinish + "", latestStart + "", latestFinish + "",
                 latestStart - earlyStart + "", criticalCond};
         return toString;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "cost=" + cost +
-                ", name='" + name + '\'' +
-                ", poprzednik=" + poprzednik +
-                '}';
     }
 }
 

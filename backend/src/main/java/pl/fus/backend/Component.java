@@ -2,7 +2,7 @@ package pl.fus.backend;
 
 import org.springframework.web.bind.annotation.*;
 import pl.fus.backend.CPM.CpmService;
-import pl.fus.backend.CPM.Task;
+import pl.fus.backend.CPM.TaskDTO;
 
 @RestController
 public class Component {
@@ -13,7 +13,7 @@ public class Component {
     }
 
     @RequestMapping(value = "/cpm", method = RequestMethod.POST, consumes = "application/json")
-    public void returnListOfTasks(@RequestBody Task[] tasks) {
+    public void returnListOfTasks(@RequestBody TaskDTO[] tasks) {
         cpmService.calculate(tasks);
     }
 }
