@@ -10,7 +10,7 @@ public class CpmService {
     public static String format = "%1$-10s %2$-5s %3$-5s %4$-5s %5$-5s %6$-5s %7$-10s\n";
     public List<Task> tasks = new ArrayList<>();
 
-    public void calculate(TaskDTO[] tasksDto) {
+    public ResponseTask[] calculate(TaskDTO[] tasksDto) {
         this.tasks.clear();
         for (int i = 0; i < tasksDto.length; i++) {
             if (tasksDto[i].getDependencies() == null)
@@ -28,6 +28,25 @@ public class CpmService {
         allTasks.addAll(this.tasks);
         Task[] result = criticalPath(allTasks);
         print(result);
+        return response(result);
+    }
+
+    public ResponseTask[] response(Task[] result) {
+        ArrayList<ResponseTask> list = new ArrayList<>();
+        for (Task task : result) {
+            boolean criticalCond = task.getEarlyStart() == task.getLatestStart() ? true : false;
+            list.add(
+                    new ResponseTask(
+                            task.getName()
+                            , task.getEarlyStart()
+                            , task.getEarlyFinish()
+                            , task.getLatestStart()
+                            , task.getLatestFinish()
+                            , (task.getLatestStart() - task.getEarlyStart())
+                            , criticalCond)
+                    );
+        }
+        return list.toArray(new ResponseTask[0]);
     }
 
     public static Task[] criticalPath(Set<Task> tasks) {

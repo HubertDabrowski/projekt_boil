@@ -21,25 +21,19 @@ public class Task {
     // the actual cost of the task
     private int cost;
     // the cost of the task along the critical path
-    @JsonIgnore
     private int criticalCost;
     // a name for the task for printing
     private String name;
     // the earliest start
-    @JsonIgnore
     private int earlyStart;
     // the earliest finish
-    @JsonIgnore
     private int earlyFinish;
     // the latest start
-    @JsonIgnore
     private int latestStart;
     // the latest finish
-    @JsonIgnore
     private int latestFinish;
     // the tasks on which this task is dependant
 //    public List<String> poprzednik = new ArrayList<>();
-    @JsonIgnore
     private Set<Task> dependencies = new HashSet<>();
 
     public Task(TaskDTO dto) {
@@ -68,5 +62,7 @@ public class Task {
                 latestStart - earlyStart + "", criticalCond};
         return toString;
     }
+
+
 }
 

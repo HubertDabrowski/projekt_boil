@@ -1,0 +1,69 @@
+[
+  {
+    "name": "A",
+    "cost": 3
+  },
+  {
+    "name": "B",
+    "cost": 4,
+    "dependencies": [
+      "A"
+    ]
+  },
+  {
+    "name": "C",
+    "cost": 6,
+    "dependencies": [
+      "A"
+    ]
+  },
+  {
+    "name": "D",
+    "cost": 7,
+    "dependencies": [
+      "B"
+    ]
+  },
+  {
+    "name": "E",
+    "cost": 1,
+    "dependencies": [
+      "D"
+    ]
+  },
+  {
+    "name": "F",
+    "cost": 2,
+    "dependencies": [
+      "C"
+    ]
+  },
+  {
+    "name": "G",
+    "cost": 3,
+    "dependencies": [
+      "C"
+    ]
+  },
+  {
+    "name": "H",
+    "cost": 4,
+    "dependencies": [
+      "G"
+    ]
+  },
+  {
+    "name": "I",
+    "cost": 1,
+    "dependencies": [
+      "H"
+    ]
+  },
+  {
+    "name": "J",
+    "cost": 2,
+    "dependencies": [
+      "I"
+    ]
+  }
+]
