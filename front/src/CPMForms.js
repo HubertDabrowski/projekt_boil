@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CPMForms = () => {
   const [amount, setAmount] = useState(1);
@@ -12,6 +12,8 @@ const CPMForms = () => {
       dependencies: "",
     },
   ]);
+
+const navigate = useNavigate();
 
   useEffect(() => {
     //console.log(data);
@@ -42,10 +44,20 @@ const CPMForms = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((dat) =>{
+        navigate("/cpm/results", {
+              state: {
+                calc: dat,
+                form: data
+              }})
+        console.log(data)
+      } 
+        
+      )
   };
 
   return (
@@ -73,14 +85,15 @@ const CPMForms = () => {
           {forms}
         </div>
         <div className="mb-10 mt-5 flex justify-center">
-          <button
-            type="submit"
-            value="Submit"
-            className="w-40 align-middle bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          >
-            Oblicz
-          </button>
-          <Link to="/cpm/results"></Link>
+          
+            <button
+              type="submit"
+              value="Submit"
+              className="w-24 align-middle bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Oblicz
+            </button>
+          
         </div>
       </form>
     </div>

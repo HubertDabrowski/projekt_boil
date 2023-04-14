@@ -1,28 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import Graph from "react-graph-vis";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CPMResults = () => {
+  const { state } = useLocation();
+  const { calc, form } = state;
+
   const graph = {
-    nodes: [
-      { id: 1, label: "Node 1", title: "node 1 tootip text" },
-      { id: 2, label: "Node 2", title: "node 2 tootip text" },
-      { id: 3, label: "Node 3", title: "node 3 tootip text" },
-      { id: 4, label: "Node 4", title: "node 4 tootip text" },
-      { id: 5, label: "Node 5", title: "node 5 tootip text" },
-    ],
+    nodes: [{ id: "-", label: "start" }],
     edges: [
-      { from: 1, to: 2 },
-      { from: 1, to: 3 },
-      { from: 2, to: 4 },
-      { from: 2, to: 5 },
+      // { from: "1", to: 2 },
+      // { from: 1, to: 3 },
+      // { from: 2, to: 4 },
+      // { from: 2, to: 5 },
     ],
   };
 
+  form.forEach((el, index) => {
+    const data = calc[index];
+    graph.nodes.push({
+      id: el.name,
+      label: `${el.name}\nES: ${data.earlyStart} EF: ${data.earlyFinish}\nR: ${data.slack}`,
+    });
+  });
+  graph.nodes.push({ id: "end", label: "finish" });
+
+  form.forEach((el) => {
+    el.dependencies.forEach(function (dependency) {
+      graph.edges.push({ from: dependency, to: el.name });
+    });
+  });
+
+  let depAll = [];
+  let nodeIdAll = [];
+  form.forEach((el) => {
+    nodeIdAll.push(el.name);
+    el.dependencies.forEach(function (dependency) {
+      if (dependency !== "-") depAll.push(dependency);
+    });
+  });
+  console.log(depAll);
+  console.log(nodeIdAll);
+  for (let i = 0; i < depAll.length; i++) {
+    if (!depAll.includes(nodeIdAll[i])) {
+      graph.edges.push({ from:nodeIdAll[i] , to: "end" });
+    }
+  }
+  console.log(graph);
+
   const options = {
     layout: {
-      hierarchical: true,
+      hierarchical: false,
     },
     edges: {
       color: "#000000",

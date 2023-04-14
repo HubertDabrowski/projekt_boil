@@ -13,8 +13,9 @@ class Form extends React.Component {
     this.handleChange=async(event)=> {
       console.log(event.target.name)
       if(event.target.name === "dependencies"){
+        const depArr=event.target.value.split(",")
         await this.setState({
-          dependencies: [event.target.value]
+          dependencies: depArr
         })
       }else{
          await this.setState({
