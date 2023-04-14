@@ -15,7 +15,7 @@ public class Component {
         this.cpmService = cpmService;
     }
 
-    @CrossOrigin("http://localhost:3000/")
+    @CrossOrigin(origins = {"http://localhost:3000/","http:://localhost:8080"})
     @RequestMapping(value = "/cpm", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<ResponseTask[]> returnListOfTasks(@RequestBody TaskDTO[] tasks) {
         ResponseTask[] responseTasks = cpmService.calculate(tasks);
