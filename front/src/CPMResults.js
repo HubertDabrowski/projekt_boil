@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import Graph from "react-graph-vis";
 import { Link, useLocation } from "react-router-dom";
+import "./network.css";
 
 const CPMResults = () => {
   const { state } = useLocation();
@@ -21,14 +22,34 @@ const CPMResults = () => {
     const data = calc[index];
     graph.nodes.push({
       id: el.name,
-      label: `${el.name}\nES: ${data.earlyStart} EF: ${data.earlyFinish}\nR: ${data.slack}`,
+      label: `${el.name}`,
+      title: `${el.name}\nES: ${data.earlyStart} EF: ${data.earlyFinish}\nR: ${data.slack}`,
     });
   });
   graph.nodes.push({ id: "end", label: "finish" });
 
-  form.forEach((el) => {
-    el.dependencies.forEach(function (dependency) {
-      graph.edges.push({ from: dependency, to: el.name });
+  form.forEach((el, index) => {
+    //console.log(index)
+    const data = calc[index];
+
+    el.dependencies.forEach(function (dependency, index2) {
+      // console.log("DEPENDENCJA"+dependency)
+      // console.log("ELEMENTACJA"+el.name)
+      let prev = calc.find((element)=>element.name === dependency)
+      let curr = calc.find((element)=>element.name === el.name)
+      if(typeof prev === 'undefined'){
+        prev = {critical: true}
+      }
+      
+      graph.edges.push({
+        from: dependency,
+        to: el.name,
+        ...((
+          prev.critical && curr.critical
+          )
+          ? { color: "red" }
+          : { color: "black" }),
+      });
     });
   });
 
@@ -43,8 +64,13 @@ const CPMResults = () => {
   console.log(depAll);
   console.log(nodeIdAll);
   for (let i = 0; i < depAll.length; i++) {
+    const data = calc[i];
     if (!depAll.includes(nodeIdAll[i])) {
-      graph.edges.push({ from:nodeIdAll[i] , to: "end" });
+      graph.edges.push({
+        from: nodeIdAll[i],
+        to: "end",
+        ...(data.critical ? { color: "red" } : { color: "black" }),
+      });
     }
   }
   console.log(graph);
@@ -53,15 +79,28 @@ const CPMResults = () => {
     layout: {
       hierarchical: false,
     },
-    edges: {
-      color: "#000000",
-    },
+    // edges: {
+    //   color: "#000000",
+    // },
     height: "540px",
+  };
+
+  const events = {
+    select: function (event) {
+      var { nodes, edges } = event;
+    },
   };
 
   return (
     <div className="pt-10">
-      <Graph graph={graph} options={options} />
+      <Graph
+        graph={graph}
+        options={options}
+        events={events}
+        getNetwork={(network) => {
+          //  if you want access to vis.js network api you can set the state in a parent component using this property
+        }}
+      />
       <div className="flex justify-center pt-10">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
           <Link to="/">Home</Link>
