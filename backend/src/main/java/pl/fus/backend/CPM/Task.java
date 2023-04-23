@@ -32,14 +32,10 @@ public class Task {
     private int latestStart;
     // the latest finish
     private int latestFinish;
+    private int slack;
     // the tasks on which this task is dependant
-//    public List<String> poprzednik = new ArrayList<>();
     private Set<Task> dependencies = new HashSet<>();
 
-    public Task(TaskDTO dto) {
-        this.name = dto.getName();
-        this.cost = dto.getCost();
-    }
 
     public Task(String name, int cost, Task... dependencies) {
         this.name = name;
@@ -51,18 +47,11 @@ public class Task {
         this.earlyFinish = -1;
     }
 
-    public void setLatest() {
-        latestStart = maxCost - criticalCost;
-        latestFinish = latestStart + cost;
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                '}';
     }
-
-    public String[] toStringArray() {
-        String criticalCond = earlyStart == latestStart ? "Yes" : "No";
-        String[] toString = {name, earlyStart + "", earlyFinish + "", latestStart + "", latestFinish + "",
-                latestStart - earlyStart + "", criticalCond};
-        return toString;
-    }
-
-
 }
 
