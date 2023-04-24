@@ -35,18 +35,16 @@ const CPMResults = () => {
     el.dependencies.forEach(function (dependency, index2) {
       // console.log("DEPENDENCJA"+dependency)
       // console.log("ELEMENTACJA"+el.name)
-      let prev = calc.find((element)=>element.name === dependency)
-      let curr = calc.find((element)=>element.name === el.name)
-      if(typeof prev === 'undefined'){
-        prev = {critical: true}
+      let prev = calc.find((element) => element.name === dependency);
+      let curr = calc.find((element) => element.name === el.name);
+      if (typeof prev === "undefined") {
+        prev = { critical: true };
       }
-      
+
       graph.edges.push({
         from: dependency,
         to: el.name,
-        ...((
-          prev.critical && curr.critical
-          )
+        ...(prev.critical && curr.critical
           ? { color: "red" }
           : { color: "black" }),
       });
@@ -63,7 +61,7 @@ const CPMResults = () => {
   });
   console.log(depAll);
   console.log(nodeIdAll);
-  for (let i = 0; i < depAll.length; i++) {
+  for (let i = 0; i < nodeIdAll.length; i++) {
     const data = calc[i];
     if (!depAll.includes(nodeIdAll[i])) {
       graph.edges.push({
@@ -91,6 +89,20 @@ const CPMResults = () => {
     },
   };
 
+  const table = calc.map((element) => {
+    return (
+      <tr>
+        <th>{element.name}</th>
+        <th>{element.earlyStart}</th>
+        <th>{element.earlyFinish}</th>
+        <th>{element.latestStart}</th>
+        <th>{element.latestFinish}</th>
+        <th>{element.slack}</th>
+        <th>{element.critical.toString()}</th>
+      </tr>
+    );
+  });
+
   return (
     <div className="pt-10">
       <Graph
@@ -106,6 +118,19 @@ const CPMResults = () => {
           <Link to="/">Home</Link>
         </button>
       </div>
+      <table>
+        {" "}
+        <tr>
+          <th>Name</th>
+          <th>ES</th>
+          <th>EF</th>
+          <th>LS</th>
+          <th>LF</th>
+          <th>Slack</th>
+          <th>Is critical</th>
+        </tr>
+        {table}
+      </table>
     </div>
   );
 };
