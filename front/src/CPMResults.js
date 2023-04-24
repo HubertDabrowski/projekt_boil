@@ -23,7 +23,7 @@ const CPMResults = () => {
     graph.nodes.push({
       id: el.name,
       label: `${el.name}`,
-      title: `${el.name}\nES: ${data.earlyStart} EF: ${data.earlyFinish}\nR: ${data.slack}`,
+      title: `${el.name}\nES: ${data.earlyStart} EF: ${data.earlyFinish}\nLS: ${data.latestStart} LF: ${data.latestFinish}\nR: ${data.slack}`,
     });
   });
   graph.nodes.push({ id: "end", label: "finish" });
