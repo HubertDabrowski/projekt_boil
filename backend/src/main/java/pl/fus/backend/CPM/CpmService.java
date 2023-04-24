@@ -14,7 +14,7 @@ public class CpmService {
 
     public ResponseTask[] calculate(TaskDTO[] tasksDto) {
         this.tasks.clear();
-
+        maxCost = 0;
         returnTasksWithDependencies(tasksDto);
 
         HashSet<Task> allTasks = new HashSet<>();
@@ -27,9 +27,9 @@ public class CpmService {
         calculateEarly(taskMap);
         // calculate late start and late finish
         calculateLatest();
-        
+
         List<Task> criticalPath = calculateCriticalPath();
-        
+
         // print results
         printResult(criticalPath);
         return response(tasks);
@@ -86,7 +86,7 @@ public class CpmService {
         LinkedHashSet<Task> initials = initials(reversedTasks);
 
         for (Task task : reversedTasks) {
-            if(initials.contains(task)){
+            if (initials.contains(task)) {
                 task.setLatestFinish(maxCost);
                 task.setLatestStart(task.getLatestFinish() - task.getCost());
                 for (Task dependency : task.getDependencies()) {
@@ -96,7 +96,15 @@ public class CpmService {
             }
             task.setLatestStart(task.getLatestFinish() - task.getCost());
             for (Task dependency : task.getDependencies()) {
-                dependency.setLatestFinish(task.getLatestStart());
+                dependency.setLatestFinish(Math.min(task.getLatestStart(), dependency.getLatestFinish()));
+
+                if (dependency.getLatestFinish() == 0) {
+                    int taskLS = task.getLatestStart();
+                    int dependencyLS = dependency.getLatestStart();
+                    dependency.setLatestFinish(task.getLatestStart());
+                    continue;
+                }
+//                dependency.setLatestFinish(task.getLatestStart());
             }
         }
     }
