@@ -104,7 +104,7 @@ const CPMResults = () => {
   });
 
   return (
-    <div className="pt-10">
+    <div className="pt-2">
       <Graph
         graph={graph}
         options={options}
@@ -113,24 +113,26 @@ const CPMResults = () => {
           //  if you want access to vis.js network api you can set the state in a parent component using this property
         }}
       />
-      <div className="flex justify-center pt-10">
+      <div className="flex justify-center pt-3">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Early Start</th>
+            <th>Early Finish</th>
+            <th>Latest Start</th>
+            <th>Latest Finish</th>
+            <th>Slack</th>
+            <th>Is critical</th>
+          </tr>
+          {table}
+        </table>
+      </div>
+
+      <div className="flex justify-center pt-10 pb-10">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
           <Link to="/">Home</Link>
         </button>
       </div>
-      <table>
-        {" "}
-        <tr>
-          <th>Name</th>
-          <th>ES</th>
-          <th>EF</th>
-          <th>LS</th>
-          <th>LF</th>
-          <th>Slack</th>
-          <th>Is critical</th>
-        </tr>
-        {table}
-      </table>
     </div>
   );
 };

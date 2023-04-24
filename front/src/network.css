@@ -1,6 +1,7 @@
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+  background-color: rgb(243, 239, 239);
 }
 
 .vis .overlay {

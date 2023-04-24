@@ -9,7 +9,7 @@ import index from "./index.css"
 
 function App() {
   return (
-    <div className="bg-gradient-to-r from-yellow-200 via-green-200 to-green-500 h-screen">
+    <div className="bg-gradient-to-r from-yellow-200 via-green-200 to-green-500 h-full">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
