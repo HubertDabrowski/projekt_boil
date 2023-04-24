@@ -80,7 +80,7 @@ const CPMResults = () => {
     // edges: {
     //   color: "#000000",
     // },
-    height: "540px",
+    height: "440px",
   };
 
   const events = {
@@ -104,31 +104,34 @@ const CPMResults = () => {
   });
 
   return (
-    <div className="pt-2">
-      <Graph
-        graph={graph}
-        options={options}
-        events={events}
-        getNetwork={(network) => {
-          //  if you want access to vis.js network api you can set the state in a parent component using this property
-        }}
-      />
-      <div className="flex justify-center pt-3">
+    <div className="pt-2 h-screen flex justify-center flex-col">
+      <div className="flex justify-center">
+        <Graph
+          graph={graph}
+          options={options}
+          events={events}
+          getNetwork={(network) => {
+            //  if you want access to vis.js network api you can set the state in a parent component using this property
+          }}
+        />
+      </div>
+
+      <div className="flex justify-center">
         <table>
           <tr>
-            <th>Name</th>
-            <th>Early Start</th>
-            <th>Early Finish</th>
-            <th>Latest Start</th>
-            <th>Latest Finish</th>
-            <th>Slack</th>
-            <th>Is critical</th>
+            <th>&nbsp; Name &nbsp;</th>
+            <th>&nbsp; Early Start &nbsp;</th>
+            <th>&nbsp;Early Finish&nbsp;</th>
+            <th>&nbsp;Latest Start&nbsp;</th>
+            <th>&nbsp;Latest Finish&nbsp;</th>
+            <th>&nbsp;Slack&nbsp;</th>
+            <th>&nbsp;Is critical&nbsp;</th>
           </tr>
           {table}
         </table>
       </div>
 
-      <div className="flex justify-center pt-10 pb-10">
+      <div className="flex justify-center mt-10 mb-10">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
           <Link to="/">Home</Link>
         </button>
