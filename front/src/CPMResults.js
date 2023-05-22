@@ -104,7 +104,7 @@ const CPMResults = () => {
   });
 
   return (
-    <div className="pt-2 h-screen flex justify-center flex-col">
+    <div className="pt-2 h-full flex justify-center flex-col">
       <div className="flex justify-center">
         <Graph
           graph={graph}
